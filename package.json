@@ -1,0 +1,14 @@
+{
+  "name": "codex-agent-architecture-setup",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Copyable bounded agent workflow starter kit.",
+  "scripts": {
+    "check:workflow": "node scripts/check-agent-workflow.mjs",
+    "check": "npm run check:workflow"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

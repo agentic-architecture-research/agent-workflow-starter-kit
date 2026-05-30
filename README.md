@@ -18,7 +18,7 @@ The architecture separates intake, context discovery, planning, execution, valid
 In this architecture, "handoff" means a controlled role transition unless an implementation explicitly uses separate sessions or agents.
 
 - Router role: classify intent, check readiness, summarize the proposed next role, and get approval when needed.
-- Manager role: after approval, own planning, task selection, verification, tracker updates, and user-facing reporting.
+- Manager role: after approval, own planning, task selection, verification, tracker updates, commits for successful completed work, and user-facing reporting.
 - Worker role: only used below a manager for bounded execution tasks. Workers are not user-facing and do not choose their own work.
 - Direct work: if the approved next role can safely complete the task without worker delegation, it may do the work itself while following that role's rules.
 
@@ -35,6 +35,7 @@ user request
 -> workers report back to manager
 -> manager verifies code
 -> progress and knowledge artifacts are updated
+-> manager commits successful completed work
 ```
 
 ## What Each Layer Owns
@@ -77,10 +78,13 @@ It should ask only blocking clarification questions, record non-blocking assumpt
 - `tasks.json` is the canonical main task ledger.
 - `agent/progress/task-status.md` is a readable derived/working view of `tasks.json`.
 - Code verification beats tracker claims.
+- `npm run check` runs the starter kit workflow guardrail when Node/npm are available.
 - `agent/feedback/issue-index.md` is the source of truth for issue-level feedback status.
 - Each feedback issue folder owns its own `tasks.json` dependency graph.
 - `agent/knowledge/index.md` is advisory context routing, not proof that code behaves a certain way.
+- Feedback issues marked `done` in `agent/feedback/issue-index.md` should be reflected in `agent/knowledge/index.md` when they create reusable context.
+- Managers should commit successful completed task or issue waves after verification and tracker updates. Workers should not commit unless the manager explicitly assigns that responsibility.
 
 ## Keep It Lightweight
 
-This setup intentionally avoids a heavy orchestration harness. The first version should work as prompts and repo artifacts. Add automation only after the manual workflow proves repetitive and stable.
+This setup intentionally avoids a heavy orchestration harness. The first version should work as prompts and repo artifacts. The included `npm run check` command is intentionally small and only checks workflow consistency; add heavier automation only after the manual workflow proves repetitive and stable.
