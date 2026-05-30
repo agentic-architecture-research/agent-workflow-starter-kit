@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "source_of_truth": "tasks.json",
+  "status_values": [
+    "not_started",
+    "in_progress",
+    "blocked",
+    "done"
+  ],
+  "tasks": [
+    {
+      "id": "T001",
+      "title": "Create repository-specific knowledge index",
+      "status": "not_started",
+      "phase": "Foundation",
+      "dependencies": [],
+      "objective": "Populate agent/knowledge/index.md with the repo's canonical files, areas, and context routes.",
+      "inputs": [
+        "repository tree",
+        "existing docs",
+        "existing code structure"
+      ],
+      "write_scope": [
+        "agent/knowledge/index.md"
+      ],
+      "authority": [
+        "Do not change product code",
+        "Do not invent architecture not evidenced by repo files"
+      ],
+      "acceptance_criteria": [
+        "Canonical planning and progress files are listed",
+        "Major application areas are identified",
+        "Context routes explain what to read for common task types",
+        "Stale or uncertain areas are explicitly marked"
+      ],
+      "verification": [
+        "Review index for concrete routes and uncertainty notes"
+      ],
+      "stop_condition": "Stop after the initial index is useful enough to route future tasks.",
+      "evidence": "",
+      "notes": "Starter task. Replace or extend with product-specific graph."
+    }
+  ]
+}
